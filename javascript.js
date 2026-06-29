@@ -17,6 +17,8 @@ function divide(a,b){
 let number = null;
 let other_number = null;
 let operator = null;
+let previousOperator = null;
+let previousOperatorIndex = null;
 
 
 function operate(operator,a,b){
@@ -47,11 +49,27 @@ const operatorBtns = document.querySelectorAll(".operator-buttons .value");
 operatorBtns.forEach(function(button){
     button.addEventListener('click', event => {
         operator = button.value;
+        let displayText;
+        let operatorIndex;
         // If number is null, assign the first number to the number variable
         if(number === null){
-            let displayText = display.innerText;
-            let operatorIndex = displayText.indexOf(operator);
+            displayText = display.innerText;
+            operatorIndex = displayText.indexOf(operator);
             number = parseInt(displayText.slice(0,operatorIndex));
+            previousOperator = operator;
+            previousOperatorIndex = operatorIndex;
+            console.log(`previousOperatorIndex: ${previousOperatorIndex}`)
+            console.log(`operatorIndex: ${operatorIndex}`)
+        } else if(number !==null && other_number === null){
+            displayText = display.innerText;
+            operatorIndex = displayText.indexOf(operator);
+            console.log(`previousOperatorIndex: ${previousOperatorIndex}`)
+            console.log(`operatorIndex: ${operatorIndex}`)
+            other_number = parseInt(displayText.slice(previousOperatorIndex+1,operatorIndex));
+            number = operate(previousOperator, number, other_number);
+            display.innerText = number + operator;
+            other_number = null;
+            previousOperator = null;
         }
     });
 });
@@ -62,6 +80,9 @@ clearBtn.addEventListener('click', event => {
     number = null;
     other_number = null;
     operator = null;
+    operatorIndex = null;
+    previousOperator = null;
+    previousOperatorIndex = null;
 })
 
 const equalBtn = document.querySelector(".equal");
@@ -72,8 +93,9 @@ equalBtn.addEventListener('click', event => {
     let equalIndex = displayText.indexOf(equalBtn.value);
     other_number = parseInt(displayText.slice(operatorIndex+1,equalIndex));
     number = operate(operator, number, other_number);
+    display.innerText = number;
+    number = null;
     other_number = null;
     operator = null;
-    display.innerText = number;
 });
 
