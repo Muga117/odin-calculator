@@ -5,14 +5,15 @@
     padding: 10px;
 }
 
-.display,
+.display-container,
 .button-container {
     border: 2px solid black;
 }
 
-.display{
+.display-container{
     font-size: 40px;
     background: rgb(1, 212, 1);
+    padding: 10px;
 }
 
 .button-container {
