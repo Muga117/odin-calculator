@@ -87,6 +87,10 @@ clearBtn.addEventListener('click', event => {
 
 const equalBtn = document.querySelector(".equal");
 equalBtn.addEventListener('click', event => {
+    if(number === null && other_number === null) {
+        let displayText = display.innerText;
+        displayText = "Error";
+    } else {
     display.append(equalBtn.value);
     let displayText = display.innerText;
     let operatorIndex = displayText.indexOf(operator);
@@ -97,5 +101,6 @@ equalBtn.addEventListener('click', event => {
     number = null;
     other_number = null;
     operator = null;
+    }
 });
 
